@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .username {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 50px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+        }
+        .button-container {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        button {
+            background-color: #063491;
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2d3748;
+        }
+        button:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="button-container">
+        <a href="{% url 'logoutUser' %}">
+            <button>Logout</button>
+        </a>
+    </div>
+    <h1>Welcome to the page! You are authenticated!</h1>
+    <div class="username">
+        {{ username }}
+    </div>
+</body>
+</html>
+
