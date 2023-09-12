@@ -1,7 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Registration Form</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.7.0/flowbite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js" integrity="sha512-AA1Bzp5Q0K1KanKKmvN/4d3IRKVlv9PYgwFPvm32nPO6QS8yH1HO7LbgB1pgiOxPtfeg5zEn2ba64MUcqJx6CA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <title>Blog Post Image Search</title>
     <style>
         body {
             background-color: black;
@@ -12,50 +21,128 @@
             justify-content: center;
             height: 100vh;
             margin: 0;
+            font-family: 'Arial', sans-serif;
         }
-        h1 {
-            text-align: center;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-        }
-        .username {
-            text-align: center;
-            margin-top: 10px;
-            font-size: 50px;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 
+        .navbar {
+            display: flex;
+            justify-content:space-around;
+            width: 100%;
+            padding: 10px;
+            background-color: #0b2f77;
+            position: fixed;
+            top: 0;
+            z-index: 1;
+            margin-bottom: 30px;
+            
         }
-        .button-container {
-            position: absolute;
-            top: 10px;
-            right: 10px;
+        .navbar h3{
+            display: flex;
+            justify-content: center;
+            color:white;
+            text-decoration: none;
+            padding-top: 15px;
+            padding-left: 15px;
         }
-        button {
-            background-color: #063491;
+
+        .navbar a button {
+            background-color: #000000;
             color: white;
             padding: 16px 32px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+
+        .navbar a button:hover {
+            background-color: #161c25;
+        }
+        .search-box {
+            display: flex;
+            align-items: center;
+            width: 600px; 
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            color: black;
+        }
+        
+     
+        .search-button {
+            background-color: #3600e9;
+            color: white;
             border: none;
             border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 16px;
             cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 25px;
+            align-items: center;
         }
-        button:hover {
-            background-color: #2d3748;
+
+        .search-button:hover {
+            background-color: #063491;
         }
-        button:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.5);
+
+        .image-container {
+            margin-top: 50px;
+        }
+
+        img {
+            max-width: 100%;
+            max-height: 500px;
+        }
+
+        .retry-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .retry-button:hover {
+            background-color: #063491;
         }
     </style>
 </head>
 <body>
-    <div class="button-container">
+    <div class="navbar">
+        <h3>Blog Post Cover</h3>
         <a href="{% url 'logoutUser' %}">
             <button>Logout</button>
         </a>
     </div>
-    <h1>Welcome to the page! You are authenticated!</h1>
-    <div class="username">
-        {{ username }}
+    <div class="content">
+        <h1>Hello, {{ username }} !</h1>
+        <div class="search-container">
+            
+        
+            <input type="text" id="searchQuery" class="search-box" placeholder="Enter Keywords for your Blog Post">
+            <button class="search-button" onclick="searchImage()">Search</button>
+        </div>
+        <div class="image-container" id="imageContainer"></div>
     </div>
+
+    <script>
+        function searchImage() {
+            var searchQuery = document.getElementById('searchQuery').value;
+            var apiKey = ''; // Replace with your  API key
+            var apiUrl = `https://api.unsplash.com/photos/random?query=${searchQuery}&client_id=${apiKey}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    var imageUrl = data.urls.regular;
+                    var imageContainer = document.getElementById('imageContainer');
+                    imageContainer.innerHTML = `<img src="${imageUrl}" alt="${searchQuery}">`;
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </body>
 </html>
+
 
